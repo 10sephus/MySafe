@@ -1,0 +1,138 @@
+<header>
+    <h1>{{title}}</h1>
+    <table>
+        <tr>
+            <td>Signers:</td>
+            <td>
+                <input #accounts style="width:700px" value={{v_signers}}>
+            </td>
+        </tr>
+        <tr>
+            <td>Min:</td>
+            <td>
+                <input #minim style="width:20px">
+                SoloBlocks:
+                <input #delay style="width:20px">
+            </td>
+
+
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td style="text-align:right">Safe Address:</td>
+            <td style="text-align:right">{{v_safe}}</td>
+        </tr>
+        <tr>
+            <td style="text-align:right">Connected Account:</td>
+            <td style="text-align:right">{{v_signer}}</td>
+        </tr>
+        <tr>
+            <td style="text-align:right">Signer Balance:</td>
+            <td style="text-align:right">{{v_sbalance}}</td>
+        </tr>
+        <tr>
+            <td>
+                <app-button color="orange" text="Create Safe"
+                    (btnClick)="deploy(accounts.value, minim.value, delay.value)"></app-button>
+            </td>
+            <td style="text-align:right">{{v_createSafe}}</td>
+
+        </tr>
+        <tr>
+            <td style="text-align:left">
+                <app-button color="green" text="Get Safe Balance" (btnClick)="getBalance()"></app-button>
+            </td>
+            <td style="text-align:right">{{v_balance}}</td>
+        </tr>
+        <tr>
+            <td style="text-align:left">
+                <app-button color="green" text="Accounts currently signing for unlock" (btnClick)="getCSigners()">
+                </app-button>
+            </td>
+            <td style="text-align:right">{{v_locks}}</td>
+        </tr>
+        <tr>
+            <td style="text-align:left">
+                <app-button color="green" text="Get Blocks to Solo Unlock" (btnClick)="getBlocksToUnlock()">
+                </app-button>
+            </td>
+            <td style="text-align:right">{{v_blocks}}</td>
+        </tr>
+        <tr>
+            <td style="text-align:left">
+                <app-button color="green" text="Get Solo Withdrawal Status" (btnClick)="getSoloStatus()"></app-button>
+            </td>
+            <td style="text-align:right">{{v_solo}}</td>
+        </tr>
+        <tr>
+            <td style="text-align:left">
+                <app-button color="orange" text="Unlock Solo" (btnClick)="unlockSolo()"></app-button>
+            </td>
+            <td style="text-align:right">{{v_unlocksolo_returnedmessage}}</td>
+
+        </tr>
+        <tr>
+            <td style="text-align:left">
+                <app-button color="orange" text="Deposit 0.001 ETH" (btnClick)="deposit()"></app-button>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:left">
+                <app-button color="orange" text="Unlock {{v_signer}}" (btnClick)="unlock()"></app-button>
+            </td>
+            <td style="text-align:right">{{v_unlock}}</td>
+        </tr>
+        <tr>
+            <td style="text-align:left">
+                <app-button color="orange" text="Reset all locks" (btnClick)="resetSafe()"></app-button>
+            </td>
+            <td style="text-align:right">{{v_reset}}</td>
+        </tr>
+        <tr>
+            <td style="text-align:left">
+                <app-button color="orange" text="Withdraw 0.001 ETH" (btnClick)="withdraw()"></app-button>
+            </td>
+            <td style="text-align:right">{{v_with}}</td>
+        </tr>
+        <tr>
+            <td style="text-align:left">
+                <app-button color="green" text="Clear all fields (display only)" (btnClick)="resetAllFields()">
+                </app-button>
+            </td>
+            <td style="text-align:right"></td>
+        </tr>
+    </table>
+    <h3>Orange = trigger transaction, Green = Read Only</h3>
+    <p>
+        Signers: Authorized accounts<br>
+        Min: Minimum authorized accounts needed to unlock safe instantly<br>
+        SoloBlocks: Number of blocks to be mined before "Solo Unlock" (Delayed single Signature)<br>
+        "Get Blocks to Solo Unlock": remaining blocks to be mined before being able to withdraw<br>
+        "Unlock Solo": Unlock delayed withdrawal (one single Signature)<br>
+        "Deposit 0.001 ETH": guess what? :)<br>
+        "Unlock": Signature to unlock the transfer. If it's >=MinSig, amount can be transferred<br>
+        "Reset al Locks": reset safe setting all locks at start values.<br>
+        "Withdraw 0.001 ETH": guess what? Cross finger and take the money :)<br>
+        <br><br>
+        Try it:
+        Fill "Signers" with 3 accounts, comma separated.<br>
+        Min = 2 (minimum number of signers to unlock the safe for immediate withdrawal)<br>
+        SoloBlocks = 10 (blocks to be mined after "solo unlock" has been activated)<br>
+        Create Safe: please wait transaction completed on metamask, controls safe exists are not currently
+        implemented.<br>
+        Get Safe Balance: returns the ether available in the safe, it will be 0 before deposit<br>
+        Deposit .0001 ETH: wait for the transaction to be completed on metamask and check balance again<br>
+        Withdraw .0001 ETH: operation will return an error, <br>
+        Option 1 (Multisig withdrawal):<br>
+        Unlock (Account#) From connected account (must be one of the signers)<br>
+        Check "Accounts currently signing for unlock". It will display "1".<br>
+        Try withdrawal. It will fail (need 2 signers)<br>
+        Connect with another account via metamask (the account must be one of the signers, and retry).<br>
+        Cross finger and withdraw :)<br>
+        Option 2 (Single sig withdrawal)<br>
+        * Unlock Solo<br>
+        Try Withdraw (will fail with execution reverted: Safe is Locked)<br>
+        Check "Get Blocks to Solo Unlock" until 0<br>
+    </p>
+</header>

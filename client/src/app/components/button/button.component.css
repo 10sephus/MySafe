@@ -1,0 +1,11 @@
+td.right {
+  text-align: right;
+  color: 'red';
+}
+td.left {
+  text-align: left;
+}
+button {
+  width:350px;
+  height: 40px;
+}
